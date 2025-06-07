@@ -12,6 +12,7 @@ actions (e.g., cancellations, returns).
 o Updating customer account information and shopping cart details.
 o Engaging in natural language conversations to provide a seamless and 
 personalized customer support experience.
+Query url http://magento.local/rest/V1/chatbot/query
 **Architecture Overview**
 1. Natural Language Processing (NLP) Engine:
 o Responsible for understanding and interpreting user inputs using 
