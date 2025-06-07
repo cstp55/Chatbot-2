@@ -1,11 +1,8 @@
-<?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Config/etc/config.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
         <chatbot>
             <general>
-                <enabled>1</enabled>
-                <react_build_js>react-chat/static/js/main.js</react_build_js>
-                <react_build_css>react-chat/static/css/main.css</react_build_css>
+                <ollama_endpoint>http://localhost:11434/api/chat</ollama_endpoint>
             </general>
         </chatbot>
     </default>

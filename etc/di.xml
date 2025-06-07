@@ -5,4 +5,5 @@
             <argument name="implementation" xsi:type="string">Aprilo\Chatbot\Model\Query</argument>
         </arguments>
     </type>
+    <preference for="Aprilo\Chatbot\Api\QueryInterface" type="Aprilo\Chatbot\Model\Api\QueryProcessor"/>
 </config>

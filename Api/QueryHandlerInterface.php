@@ -6,6 +6,7 @@ interface QueryHandlerInterface
 {
     /**
      * Handle chatbot queries
+     * @return mixed
      */
     public function handleQuery($queryData);
 }

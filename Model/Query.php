@@ -6,21 +6,36 @@ use Aprilo\Chatbot\Api\QueryInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Sales\Api\OrderRepositoryInterface;
 use Psr\Log\LoggerInterface;
+use Magento\Framework\App\Action\HttpPostActionInterface;
+use Magento\Framework\App\Action\Action;
+use Magento\Framework\App\Action\Context;
+use Magento\Framework\Controller\Result\JsonFactory;
+use Magento\Framework\HTTP\Client\Curl;
+use Aprilo\Chatbot\Helper\Data as ChatbotHelper;
 
 class Query implements QueryInterface
 {
     protected $orderRepository;
     protected $searchCriteriaBuilder;
     protected $logger;
+    protected $curl;
+    protected $chatbotHelperl;
+    protected $jsonFactory;
 
     public function __construct(
         OrderRepositoryInterface $orderRepository,
         SearchCriteriaBuilder $searchCriteriaBuilder,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        JsonFactory $jsonFactory,
+        Curl $curl,
+        ChatbotHelper $chatbotHelper
     ) {
         $this->orderRepository = $orderRepository;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
         $this->logger = $logger;
+        $this->curl = $curl;
+        $this->chatbotHelperl = $chatbotHelper;
+        $this->jsonFactory = $jsonFactory;
     }
 
     public function processQuery($query)
@@ -49,14 +64,52 @@ class Query implements QueryInterface
         }
     }
 
-    private function callLlamaModel($query)
+    private function callLlamaModel($queryData)
     {
-        // Example: Append order data to the query
-        $additionalContext = "i wants order details. Latest order status: Pending, Order ID: 12345.";
-        $prompt = $query . "\n\n" . $additionalContext;
-    
-        $llamaResponse = shell_exec("python3 /path/to/llama_script.py '" . escapeshellarg($prompt) . "'");
-        return $llamaResponse;
+        $ollamaUrl = $this->chatbotHelper->getOllamaEndpoint();
+
+        // Check if the endpoint is configured
+        if (empty($ollamaUrl)) {
+            $this->logger->error('Chatbot API: Ollama endpoint is not configured in Magento admin.');
+            throw new WebapiException(
+                new Phrase('Sorry, the chatbot service is not configured.'),
+                0,
+                WebapiException::HTTP_SERVICE_UNAVAILABLE
+            );
+        }
+        
+        try {
+            // Note: Use $queryData here, as it's the incoming parameter
+            $this->curl->setHeaders([
+                'Content-Type' => 'application/json',
+                'Content-Length' => strlen($queryData) // Use $queryData length
+            ]);
+
+            $this->curl->post($ollamaUrl, $queryData); // Use $queryData here
+
+            $ollamaResponse = $this->curl->getBody();
+            $statusCode = $this->curl->getStatus();
+
+            if ($statusCode == 200) {
+                return $ollamaResponse;
+            } else {
+                $this->logger->error('Chatbot API: Received non-200 status from Ollama.', ['status' => $statusCode, 'response' => $ollamaResponse]);
+                throw new WebapiException(
+                    new Phrase('Error from upstream chatbot service.'),
+                    0,
+                    $statusCode
+                );
+            }
+        } catch (WebapiException $e) {
+            throw $e;
+        } catch (\Exception $e) {
+            $this->logger->critical('Chatbot API Error: ' . $e->getMessage(), ['trace' => $e->getTraceAsString()]);
+            throw new WebapiException(
+                new Phrase('An internal server error occurred while processing the query.'),
+                0,
+                WebapiException::HTTP_INTERNAL_ERROR
+            );
+        }
     }
 
     private function getOrderStatusById($query)

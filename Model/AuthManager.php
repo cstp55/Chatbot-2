@@ -29,6 +29,7 @@ class AuthManager
 
     /**
      * Authenticate user and generate token
+     * @return mixed
      */
     public function login($email, $password)
     {
