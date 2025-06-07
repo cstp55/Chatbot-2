@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Webapi/etc/webapi.xsd">
+    <route method="POST" url="/V1/chatbot/auth/login">
+        <service class="Aprilo\Chatbot\Api\ChatbotAuthInterface" method="login"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <route method="POST" url="/V1/chatbot/auth/logout">
+        <service class="Aprilo\Chatbot\Api\ChatbotAuthInterface" method="logout"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <route method="POST" url="/V1/chatbot/auth/verify">
+        <service class="Aprilo\Chatbot\Api\ChatbotAuthInterface" method="verifySession"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+     <route url="/V1/chatbot/query" method="POST">
+        <service class="Aprilo\Chatbot\Api\QueryInterface" method="processQuery" />
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+    <route method="POST" url="/V1/chatbot/query">
+        <service class="Aprilo\Chatbot\Api\QueryHandlerInterface" method="handleQuery"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+</routes>

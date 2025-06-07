@@ -1,0 +1,36 @@
+.admin__fieldset {
+    background: #f4f4f4;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.admin__fieldset .admin__field.upload {
+    margin-left: 30%;
+}
+
+.admin__field {
+    margin-bottom: 10px;
+}
+
+.admin__field-label {
+    font-weight: bold;
+}
+
+.admin__control-file {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.admin__button-primary {
+    background: #007bff;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+}
+
+.admin__button-primary:hover {
+    background: #0056b3;
+}

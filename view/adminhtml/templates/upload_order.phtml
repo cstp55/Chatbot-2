@@ -1,0 +1,36 @@
+<form action="<?= $block->getUrl('chatbot/import/uploadOrder') ?>"
+    method="post"
+    enctype="multipart/form-data"
+    id="csv-upload-order-form">
+    <?= $block->getBlockHtml('formkey') ?>
+    <fieldset class="admin__fieldset">
+        <legend class="admin__legend"><?= __('Upload CSV File For Order') ?></legend>
+        <div class="admin__field">
+            <label class="admin__field-label">Select CSV:</label>
+            <div class="admin__field-control">
+                <input type="file" name="csv_file_order" accept=".csv" class="admin__control-file" required />
+                <a href="<?= $block->getViewFileUrl('Aprilo_Chatbot::sample_file/sample_order.csv') ?>"
+                    class="admin__button">Download Sample File</a>
+            </div>
+        </div>
+        <div class="admin__field upload">
+            <button type="submit" class="admin__button-primary" id="upload-btn-order"><?= __('Upload and Process CSV') ?></button>
+        </div>
+    </fieldset>
+</form>
+
+<script>
+    require(['jquery'], function($) {
+        $(document).ready(function() {
+            $('#csv-upload-order-form').on('submit', function() {
+                $('body').trigger('processStart');
+                if ($('#upload-btn-order').prop('disabled')) {
+                    e.preventDefault(); // Prevent multiple submissions
+                    return false;
+                }
+                // Disable the button
+                $('#upload-btn-order').prop('disabled', true).text('Processing...');
+            });
+        });
+    });
+</script>

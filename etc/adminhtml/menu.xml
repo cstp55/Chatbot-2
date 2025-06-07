@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Aprilo_Chatbot::manage" title="Manage ChatBot" module="Aprilo_Chatbot" sortOrder="51" resource="Aprilo_Chatbot::manage"/>
+        <add id="Aprilo_Chatbot::import_product" title="Import Product File" module="Aprilo_Chatbot" sortOrder="10" action="chatbot/import/index" resource="Aprilo_Chatbot::import_product" parent="Aprilo_Chatbot::manage"/>
+        <add id="Aprilo_Chatbot::import_order" title="Import Order File" module="Aprilo_Chatbot" sortOrder="10" action="chatbot/import/order" resource="Aprilo_Chatbot::import_order" parent="Aprilo_Chatbot::manage"/>
+        <add id="Aprilo_Chatbot::import_review" title="Import Review File" module="Aprilo_Chatbot" sortOrder="10" action="chatbot/import/review" resource="Aprilo_Chatbot::import_review" parent="Aprilo_Chatbot::manage"/>
+    </menu>
+</config>

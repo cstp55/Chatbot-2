@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config/etc/system_file.xsd">
+    <system>
+        <tab id="aprilo" translate="label" sortOrder="10" class="config-aprilo-tab">
+            <label>Aprilo</label>
+        </tab>
+        <section id="chatbot" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>ChatBot</label>
+            <tab>aprilo</tab>
+            <resource>Aprilo_Chatbot::config_chatbot</resource>
+            <group id="general" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Setting</label>
+                <field id="enabled" translate="label" sortOrder="10" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable ChatBot</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="react_build_js" translate="label" sortOrder="20" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>React Build JS Path</label>
+                    <comment>Enter the JS file path (e.g., react-chat/static/js/main.hash.js)</comment>
+                </field>
+                <field id="react_build_css" translate="label" sortOrder="30" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>React Build CSS Path</label>
+                    <comment>Enter the CSS file path (e.g., react-chat/static/css/main.hash.css)</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

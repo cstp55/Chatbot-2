@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Element/UiComponent/etc/ui_configuration.xsd">
+    <head>
+        <css src="Aprilo_Chatbot::css/style.css"/>
+    </head>
+    <referenceContainer name="content">
+        <block class="Magento\Backend\Block\Template" name="chatbot_review" template="Aprilo_Chatbot::upload_review.phtml"/>
+    </referenceContainer>
+</layout>
