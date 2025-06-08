@@ -20,6 +20,8 @@ def handle_query():
 
     if user_logged_in and data.get("query_type") == "order_status":
         return jsonify({"response": f"Your order {data['order_id']} is in processing."})
+    if user_logged_in and data.get("query_type") == "shipment_status":
+        return jsonify({"response": f"Shipment for order {data['order_id']} is currently being processed."})
 
     # Fetch response from ChromaDB
     documents = retriever.similarity_search(query, k=3)

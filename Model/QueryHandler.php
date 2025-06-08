@@ -39,13 +39,15 @@ class QueryHandler
         $loggedIn = $session ? true : false;
 
         // If user-specific query and not logged in, request login
-        if (!$loggedIn && in_array($queryType, ['order_status', 'refund_status'])) {
+        if (!$loggedIn && in_array($queryType, ['order_status', 'refund_status', 'shipment_status'])) {
             return ['error' => 'Please log in to access this information.'];
         }
 
         // User-Specific Queries
         if ($queryType == 'order_status') {
             return $this->fetchOrderStatus($queryData['order_id']);
+        } elseif ($queryType == 'shipment_status') {
+            return $this->fetchShipmentStatus($queryData['order_id']);
         }
 
         // Call AI Chatbot Service for General Queries
@@ -61,6 +63,14 @@ class QueryHandler
         return $order->getId()
             ? ['order_id' => $orderId, 'status' => $order->getStatus()]
             : ['error' => 'Order not found'];
+    }
+
+    /**
+     * Fetch shipment status
+     */
+    protected function fetchShipmentStatus($orderId)
+    {
+        return ['order_id' => $orderId, 'shipment_status' => 'Shipped', 'tracking_number' => '12345XYZ'];
     }
 
     /**
